@@ -10,10 +10,7 @@ import { plainToInstance } from 'class-transformer';
 @Injectable()
 export class UsersInMemoryRepository implements UsersRepository {
   private database = {};
-  private databasePath = path.resolve(
-    __dirname,
-    '../../../../../database/db.json',
-  );
+  private databasePath = path.resolve(__dirname, '../../../../../db.json');
 
   private persist() {
     fs.writeFile(this.databasePath, JSON.stringify(this.database));
@@ -58,6 +55,13 @@ export class UsersInMemoryRepository implements UsersRepository {
 
   findOne(id: string): User | Promise<User> {
     const user = this.database['users'].find((user: User) => user.id === id);
+    return plainToInstance(User, user);
+  }
+
+  findByUsername(username: string): User | Promise<User> {
+    const user = this.database['users'].find(
+      (user: User) => user.username === username,
+    );
     return plainToInstance(User, user);
   }
 
