@@ -36,6 +36,12 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @Get(':username')
+  @UseInterceptors(ClassSerializerInterceptor)
+  findByUsername(@Param('username', ParseUUIDPipe) username: string) {
+    return this.usersService.findOne(username);
+  }
+
   @Patch(':id')
   @UseInterceptors(ClassSerializerInterceptor)
   update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
