@@ -17,3 +17,13 @@ model User {
 
   @@map("users")
 }
+
+model Product {
+  id String @id
+  name String @unique
+  category String
+  description String
+  price String
+
+  @@map("products")
+}
