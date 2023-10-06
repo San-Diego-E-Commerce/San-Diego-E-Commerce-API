@@ -1,4 +1,5 @@
-import { IsNotEmpty, IsString } from 'class-validator';
+import { Cart } from '@prisma/client';
+import { IsEmpty, IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateProductDto {
   @IsString()

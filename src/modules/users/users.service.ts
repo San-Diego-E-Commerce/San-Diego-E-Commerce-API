@@ -51,13 +51,13 @@ export class UsersService {
     return findUser;
   }
 
-  async update(id: string, updateUserDto: UpdateUserDto) {
-    const findUser = await this.usersRepository.findOne(id);
-    if (!findUser) {
-      throw new NotFoundException('Usuário não encontrado.');
-    }
-    return this.usersRepository.update(id, updateUserDto);
-  }
+  // async update(id: string, updateUserDto: UpdateUserDto) {
+  //   const findUser = await this.usersRepository.findOne(id);
+  //   if (!findUser) {
+  //     throw new NotFoundException('Usuário não encontrado.');
+  //   }
+  //   return this.usersRepository.update(id, updateUserDto);
+  // }
 
   async remove(id: string) {
     const findUser = await this.usersRepository.findOne(id);

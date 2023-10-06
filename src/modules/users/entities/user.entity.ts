@@ -1,3 +1,4 @@
+import { Cart } from '@prisma/client';
 import { Exclude } from 'class-transformer';
 import { randomUUID } from 'node:crypto';
 
@@ -7,6 +8,7 @@ export class User {
   last_name: string;
   username: string;
   email: string;
+  readonly cart: Cart;
 
   @Exclude()
   password: string;

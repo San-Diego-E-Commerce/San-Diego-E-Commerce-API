@@ -47,12 +47,12 @@ export class UsersController {
     return this.usersService.findOne(username);
   }
 
-  @Patch(':id')
-  @UseGuards(JwtAuthGuard)
-  @UseInterceptors(ClassSerializerInterceptor)
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(id, updateUserDto);
-  }
+  // @Patch(':id')
+  // @UseGuards(JwtAuthGuard)
+  // @UseInterceptors(ClassSerializerInterceptor)
+  // update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  //   return this.usersService.update(id, updateUserDto);
+  // }
 
   @Delete(':id')
   @UseGuards(JwtAuthGuard)

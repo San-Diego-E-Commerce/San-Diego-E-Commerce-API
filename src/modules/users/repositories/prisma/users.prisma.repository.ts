@@ -10,33 +10,36 @@ import { plainToInstance } from 'class-transformer';
 export class UsersPrismaRepository implements UsersRepository {
   constructor(private prisma: PrismaService) {}
   async create(data: CreateUserDto): Promise<User> {
+    const { cart, ...CreateUserDto } = data;
     const user = new User();
     Object.assign(user, {
-      ...data,
+      ...CreateUserDto,
+      cart: { create: cart },
     });
     const newUser = await this.prisma.user.create({
-      data: { ...user },
+      data: { ...user, cart: { create: cart } },
     });
 
     return plainToInstance(User, newUser);
   }
   async findAll(): Promise<User[]> {
-    const users = await this.prisma.user.findMany();
+    const users = await this.prisma.user.findMany({ include: { cart: true } });
     return plainToInstance(User, users);
   }
   async findOne(id: string): Promise<User> {
     const user = await this.prisma.user.findUnique({
       where: { id },
+      include: { cart: true },
     });
     return plainToInstance(User, user);
   }
-  async update(id: string, data: UpdateUserDto): Promise<User> {
-    const user = await this.prisma.user.update({
-      where: { id },
-      data: { ...data },
-    });
-    return plainToInstance(User, user);
-  }
+  // async update(id: string, data: UpdateUserDto): Promise<User> {
+  //   const user = await this.prisma.user.update({
+  //     where: { id },
+  //     data: { ...data },
+  //   });
+  //   return plainToInstance(User, user);
+  // }
   async delete(id: string): Promise<void> {
     await this.prisma.user.delete({
       where: { id },
@@ -53,6 +56,7 @@ export class UsersPrismaRepository implements UsersRepository {
   async findByEmail(email: string): Promise<User> {
     const user = await this.prisma.user.findUnique({
       where: { email },
+      include: { cart: true },
     });
     return user;
   }
